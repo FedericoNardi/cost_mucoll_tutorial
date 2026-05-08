@@ -24,7 +24,7 @@ Proposed sites are CERN and Fermilab, with a collider ring of O(10 km).
 
 ## Software stack
 
-This tutorial follows the [MuCol software wiki](https://mcd-wiki.web.cern.ch/software/tutorials/) and is based on the **ILCSoft** and **Key4hep** software suites. It requires a container manager (e.g. Apptainer) with access to CVMFS.
+This tutorial follows the [MuCol software wiki](https://mcd-wiki.web.cern.ch/software/tutorials/) and is based on the **ILCSoft** and **Key4hep** software suites. It requires a container manager (e.g. [Apptainer](https://apptainer.org/docs/user/latest/)) and access to CVMFS.
 
 ### Get the steering files
 
@@ -71,7 +71,7 @@ anajob output_gen.slcio
 
 ### 1.2 Detector simulation
 
-Run Geant4 simulation via `ddsim`. The MuColl_v1 geometry is available at `$MUCOLL_GEO`:
+Run Geant4 simulation via `ddsim`. The `MuColl_v1` geometry for the 3TeV detector studies is available at `$MUCOLL_GEO`:
 
 ```bash
 echo $MUCOLL_GEO
@@ -179,8 +179,8 @@ BIB particles are simulated separately (FLUKA → `ddsim`) and stored as pre-sim
 `OverlayTimingRandomMix` draws independently from μ⁺ and μ⁻ BIB file pools and randomly composes each BIB event on the fly, providing genuine event-to-event stochasticity even with a small file pool. Both arguments expect a **directory** of `.slcio` files.
 
 ```bash
-export MUPLUS="/path/to/bib/sim_mp_pruned/"
-export MUMINUS="/path/to/bib/sim_mm_pruned/"
+export MUPLUS="/path/to/bib/sim_mu_plus/"
+export MUMINUS="/path/to/bib/sim_mu_minus/"
 
 k4run mucoll-benchmarks/digitisation/k4run/digi_steer.py \
   --LcioEvent.Files            output_sim.slcio \
