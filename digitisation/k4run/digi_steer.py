@@ -60,6 +60,13 @@ parser.add_argument(
     default=False,
 )
 
+parser.add_argument(
+    "--outputPath",
+    help="Path for digitisation output",
+    default="./",
+    type=str,
+)
+
 the_args = parser.parse_known_args()[0]
 
 algList = []
@@ -83,7 +90,7 @@ AIDA.OutputLevel = INFO
 AIDA.ProcessorType = "AIDAProcessor"
 AIDA.Parameters = {
                    "Compress": ["1"],
-                   "FileName": ["output_digi"],
+                   "FileName": [the_args.outputPath+"output_digi"],
                    "FileType": ["root"]
                    }
 
@@ -102,7 +109,7 @@ LCIOWriter_all.Parameters = {
                              "DropCollectionTypes": [],
                              "FullSubsetCollections": [],
                              "KeepCollectionNames": [],
-                             "LCIOOutputFile": ["output_digi.slcio"],
+                             "LCIOOutputFile": [the_args.outputPath+"output_digi.slcio"],
                              "LCIOWriteMode": ["WRITE_NEW"]
                              }
 
@@ -114,7 +121,7 @@ LCIOWriter_light.Parameters = {
                                "DropCollectionTypes": ["SimTrackerHit", "SimCalorimeterHit", "LCRelation"],
                                "FullSubsetCollections": [],
                                "KeepCollectionNames": [],
-                               "LCIOOutputFile": ["output_digi_light.slcio"],
+                               "LCIOOutputFile": [the_args.outputPath+"output_digi_light.slcio"],
                                "LCIOWriteMode": ["WRITE_NEW"]
                                }
 
