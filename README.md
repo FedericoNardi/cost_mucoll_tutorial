@@ -141,11 +141,19 @@ integrate (hdec) { iterations = 3:1000:"gw", 1:5000 }   # tutorial (fast, ~secon
 integrate (hdec) { iterations = 20:8000000:"gw", 5:20000000 }  # production (hours)
 ```
 
-For a tutorial with ~10 events, the light settings are sufficient. Pre-distributing a cached `.grid` file lets participants skip the integration step entirely:
-
+For a tutorial with ~10 events, the light settings are sufficient. 
+Alternatively, you can download a cached .grid file from 
+```bash
+cp /cvmfs/muoncollider.cern.ch/datasets/tutorial_20230705/gen_Hbb/mumu_H_bb_3TeV.hepmc ./
+```
+or (if `/cvmfs` is missing)
+```bash
+wget https://nbartosi.web.cern.ch/tutorial_20230705/gen_Hbb/mumu_H_bb_3TeV.hepmc
+```
+and generate the MC particles without compiling matrix elements:
 ```bash
 whizard --no-integration mumu_H_bb_3TeV.sin
-```
+````
 
 ### 2.3 Detector simulation and digitisation
 
