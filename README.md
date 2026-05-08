@@ -172,12 +172,13 @@ k4run digitisation/k4run/digi_steer.py \
 
 ## Part 3 — BIB overlay
 
-The peculiarity of a Muon Collider is that all events come with a Beam-Induced Background. The BIB particles are simulated separately, starting from the FLUKA simulation of the beam-nozzle iteraction for one bunch crossing, both for the \mu^+
-and \mu^- beam.
+The peculiarity of a Muon Collider is that all events come with a Beam-Induced Background. The BIB particles are simulated separately, starting from the FLUKA simulation of the beam-nozzle iteraction for one bunch crossing, both for the μ⁺ and μ⁻ beam.
+Those particles need to be propagated through the detector geometry (simulation stace with `ddsim`) and overlaid to our signal data.
 
 ### Overlay processor
 
-`OverlayTimingRandomMix` draws independently from μ⁺ and μ⁻ BIB file pools and randomly composes each BIB event on the fly, providing genuine event-to-event stochasticity even with a small file pool. Both arguments expect a **directory** of `.slcio` files.
+The overlay process is done at the level of SimHits, so that all information in the detector goes through the digitization step altogether. For that we use the dedicated `Marlin` processor, `OverlayTimingRandomMix`.
+`OverlayTimingRandomMix` draws independently from μ⁺ and μ⁻ BIB file pools and randomly composes each BIB event on the fly, providing genuine event-to-event stochasticity even with a small file pool. Both arguments expect a **directory** of `.slcio` files. We can specify them as environment variables
 
 ```bash
 export MUPLUS="/path/to/bib/sim_mu_plus/"
@@ -188,7 +189,7 @@ k4run mucoll-benchmarks/digitisation/k4run/digi_steer.py \
   --doOverlayFull \
   --OverlayFullPathToMuPlus    $MUPLUS \
   --OverlayFullPathToMuMinus   $MUMINUS \
-  --OverlayFullNumberBackground 192     # 192 = full bunch crossing (45 φ-clones/particle)
+  --OverlayFullNumberBackground 2     # 10% og BIB - 192 = full bunch crossing (45 φ-clones/particle)
 ```
 
 ### Timing cuts
