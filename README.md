@@ -36,7 +36,7 @@ git clone https://github.com/FedericoNardi/cost_mucoll_tutorial.git
 
 ```bash
 apptainer run -B <disk/mount/location/> \
-  /cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/muoncollider/mucoll-deploy/mucoll:2.9-alma9
+  /cvmfs/unpacked.cern.ch/gitlab-registry.cern.ch/muon-collider/mucoll-deploy/mucoll:2.9-alma9
 
 source /opt/setup_mucoll.sh
 ```
@@ -51,12 +51,20 @@ A particle gun generates single-particle events with user-defined kinematics. Th
 
 ### 1.1 Event generation
 
-Generate a `.slcio` file containing initialised MCParticles:
+Generate a `.slcio` file containing initialised MCParticles. Flags:
+<ol>
+  <li>`--seed`</li>: random seed initializer 
+  <li>`--events`</li>: number of events to generate -> 10 events
+  <li>`--pdg`</li>: [PDG](https://pdg.lbl.gov/2025/mcdata/mass_width_2025.txt) identifier for the particle type -> 11: electron
+  <li>`--p`</li>: particle momentum (in GeV). Use `--pt` instead for transverse momentum -> 100 GeV electrons
+  <li>`--theta`</li>: Polar angle range to sample from -> [10,170]deg to avoid nozzle
+  <li>`-- `</li>: end separator to specify output file.
+</ol>
 
 ```bash
 python generation/pgun/pgun_lcio.py \
-  --seed 42 \        # random seed
-  -e 10 \            # number of events
+  --seed 42 \        
+  --events 10 \      # number of events
   --pdg 11 \         # particle type (11 = electron)
   --p 100 \          # momentum [GeV]
   --theta 10 170 \   # polar angle range [deg]
@@ -223,7 +231,6 @@ Visualizations of digitised hits for an event can be obtained by calling `hit_di
 ```bash
 python scripts/hit_display_single_evt.py --tracker --calo <path/to/tuple>/h_bb_tuple.root -e 5
 ```
-
 
 ---
 
