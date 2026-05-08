@@ -54,7 +54,7 @@ A particle gun generates single-particle events with user-defined kinematics. Th
 Generate a `.slcio` file containing initialised MCParticles:
 
 ```bash
-python mucoll-benchmarks/generation/pgun/pgun_lcio.py \
+python generation/pgun/pgun_lcio.py \
   --seed 42 \        # random seed
   -e 10 \            # number of events
   --pdg 11 \         # particle type (11 = electron)
@@ -79,7 +79,7 @@ echo $MUCOLL_GEO
 ```
 
 ```bash
-ddsim --steeringFile mucoll-benchmarks/simulation/ilcsoft/steer_baseline.py \
+ddsim --steeringFile simulation/ilcsoft/steer_baseline.py \
   --inputFile  output_gen.slcio \
   --outputFile output_sim.slcio
 ```
@@ -98,7 +98,7 @@ anajob output_sim.slcio
 Convert SimHits into realistic detector hits, applying energy thresholds, smearing, and timing cuts. Configuration lives in `digi_steer.py` (e.g. ECal threshold `5e-5 GeV`, timing window `[-0.5, 15] ns`).
 
 ```bash
-k4run mucoll-benchmarks/digitisation/k4run/digi_steer.py \
+k4run digitisation/k4run/digi_steer.py \
   --LcioEvent.Files <path/for/sim/file>/output_sim.slcio \
   --outputPath <path/for/digitised/file/>
 ```
@@ -129,7 +129,7 @@ Run in a dedicated folder to keep the compilation files isolated:
 
 ```bash
 mkdir H_bb && cd H_bb
-whizard ../mucoll-benchmarks/generation/signal/whizard/mumu_H_bb_3TeV.sin
+whizard ../generation/signal/whizard/mumu_H_bb_3TeV.sin
 ```
 
 Output: `mumu_H_bb_3TeV.hepmc`
@@ -160,11 +160,11 @@ whizard --no-integration mumu_H_bb_3TeV.sin
 Same commands as the particle gun case, pointing to the HepMC3 file:
 
 ```bash
-ddsim --steeringFile mucoll-benchmarks/simulation/ilcsoft/steer_baseline.py \
+ddsim --steeringFile simulation/ilcsoft/steer_baseline.py \
   --inputFile  H_bb/mumu_H_bb_3TeV.hepmc \
   --outputFile output_sim.slcio
 
-k4run mucoll-benchmarks/digitisation/k4run/digi_steer.py \
+k4run digitisation/k4run/digi_steer.py \
   --LcioEvent.Files output_sim.slcio
 ```
 
@@ -172,7 +172,8 @@ k4run mucoll-benchmarks/digitisation/k4run/digi_steer.py \
 
 ## Part 3 — BIB overlay
 
-BIB particles are simulated separately (FLUKA → `ddsim`) and stored as pre-simulated SimHit files. They are overlaid onto the signal SimHits during digitisation.
+The peculiarity of a Muon Collider is that all events come with a Beam-Induced Background. The BIB particles are simulated separately, starting from the FLUKA simulation of the beam-nozzle iteraction for one bunch crossing, both for the \mu^+
+and \mu^- beam.
 
 ### Overlay processor
 
