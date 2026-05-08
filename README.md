@@ -241,3 +241,5 @@ python scripts/hit_display_single_evt.py --tracker --calo <path/to/tuple>/h_bb_t
 - [mucoll-benchmarks repository](https://github.com/MuonColliderSoft/mucoll-benchmarks)
 - [Key4hep](https://key4hep.github.io/key4hep-doc/)
 - [ILCSoft](https://github.com/iLCSoft)
+- [PhD Thesis](https://hal.science/tel-05565343v1) - Photon reconstruction with GNN, surrogates and design optimization
+- [Presentation EuCAIFCon 2025](https://agenda.infn.it/event/43565/contributions/260118/)
