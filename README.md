@@ -212,6 +212,19 @@ BIB hits are filtered per subdetector by arrival time. Only hits within the inte
 | `.hepmc` | HepMC3 | WHIZARD output, `ddsim` input |
 | `.edm4hep.root` | EDM4hep (Key4hep native) | `k4run` output |
 
+## Visualizations
+The `scripts/` folder contains some processing code to convert the `.slcio` files into `.root` tuples, and to obtain some visualizations.
+
+Conversion is done by calling `slcio_to_root.py` on the digitized data:
+```bash
+python scripts/slcio_to_root.py -i <input/digi/file.slcio> -o <output/file.root>
+```
+Visualizations of digitised hits for an event can be obtained by calling `hit_display_single_evt.py`. It can show tracker hits (`--tracker`), calorimeter hits (`--calo`), or both if both flags are specified. The `-e` flag allows event selection to be displayed. An example call is:
+```bash
+python scripts/hit_display_single_evt.py --tracker --calo <path/to/tuple>/h_bb_tuple.root -e 5
+```
+
+
 ---
 
 ## References
