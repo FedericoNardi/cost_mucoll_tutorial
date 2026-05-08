@@ -29,7 +29,7 @@ This tutorial follows the [MuCol software wiki](https://mcd-wiki.web.cern.ch/sof
 ### Get the steering files
 
 ```bash
-git clone --branch v0.9 https://github.com/MuonColliderSoft/mucoll-benchmarks.git
+git clone https://github.com/FedericoNardi/cost_mucoll_tutorial.git
 ```
 
 ### Start the container and source the environment
@@ -99,16 +99,11 @@ Convert SimHits into realistic detector hits, applying energy thresholds, smeari
 
 ```bash
 k4run mucoll-benchmarks/digitisation/k4run/digi_steer.py \
-  --LcioEvent.Files output_sim.slcio
+  --LcioEvent.Files <path/for/sim/file>/output_sim.slcio \
+  --outputPath <path/for/digitised/file/>
 ```
 
 Output: `output_digi.slcio` (full collections) and `output_digi_light.slcio` (reduced).
-
-> **Note:** the output filename is hardcoded in the steering file. To override it, add an `--outputFile` argument to `digi_steer.py`:
-> ```python
-> parser.add_argument("--outputFile", default="output_digi.slcio")
-> ```
-> then reference `the_args.outputFile` in the `LCIOOutputFile` parameter.
 
 Downstream reconstruction (tracks, clusters, PFOs) uses ACTS for tracking and Pandora for particle flow. See the [MuCol wiki](https://mcd-wiki.web.cern.ch) for details.
 
